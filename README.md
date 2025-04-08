@@ -1,7 +1,7 @@
 # IDT4M Last Mile Health Interview Programming Exercise
 
 ## Overview
-This repository contains the solution for the **IDT4M Last Mile Health Interview Programming Exercise**. The task involves building a [Android app/Web dashboard] that interacts with a REST API to manage and visualize disease case data.
+This repository contains the solution for the **IDT4M Last Mile Health Interview Programming Exercise**. The task involves building an Android app and Web dashboard that interacts with a REST API to manage and visualize disease case data.
 
 ## Features
 - **READ**: Fetch and display disease case data from the REST API.
