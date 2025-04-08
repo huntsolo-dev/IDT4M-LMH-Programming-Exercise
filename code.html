@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connection Test</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        const getData = async () => {
+            try {
+                const data = await fetch('https://incldigitrans-5881.restdb.io/rest/cases-disease', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-apikey': "67f3e466636df6b1f15d955a",
+                        'cache-control': "no-cache"
+                    }
+                });
+                const jsond = await data.json();
+                console.log(jsond);
+                displaydata(jsond);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        function displaydata(records) {
+            if (!records.length) {
+                document.getElementById("textd").innerHTML = "<p>No data available</p>";
+                return;
+            }
+
+            let table = `<table>
+        <tr>
+            <th>Date Recorded</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Disease</th>
+        </tr>`;
+
+            records.forEach(record => {
+                table += `<tr>
+            <td>${record["Date Recorded"] ? new Date(record["Date Recorded"]).toLocaleDateString() : 'N/A'}</td>
+            <td>${record["Client Gender"] || 'N/A'}</td>
+            <td>${record["Client Age"] || 'N/A'}</td>
+            <td>${record["Disease Classification"] || 'N/A'}</td>
+        </tr>`;
+            });
+
+            table += `</table>`;
+            document.getElementById("textd").innerHTML = table;
+        }
+
+        window.onload = getData;
+    </script>
+</head>
+<body>
+<h1>Disease Cases</h1>
+<div id="textd" style="text-align: center;">Loading data...</div>
+</body>
+</html>
+
+

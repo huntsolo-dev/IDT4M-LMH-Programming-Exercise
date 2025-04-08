@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="disease_options">
+        <item>HIV/AIDS</item>
+        <item>Asthma</item>
+        <item>Cholera</item>
+        <item>Diabetes</item>
+        <item>Hypertension</item>
+        <item>Malaria</item>
+        <item>Tuberculosis</item>
+        <item>Covid-19</item>
+    </string-array>
+</resources>
