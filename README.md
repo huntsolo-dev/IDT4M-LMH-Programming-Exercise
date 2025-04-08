@@ -1,4 +1,4 @@
-# IDT4M Last Mile Health Interview Programming Exercise
+# IDT4M Last Mile Health Interview Programming Exercise by Pacharo Simukonda
 
 ## **Overview**
 This repository contains the complete solution for the **IDT4M Last Mile Health Interview Programming Exercise**. The task involves building two components:  
