@@ -19,9 +19,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.widget.EditText
+import android.view.View
+import com.example.diseasetrackerapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DiseaseCaseAdapter
     private lateinit var etFilter: EditText
@@ -29,17 +32,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView = binding.recyclerView
         adapter = DiseaseCaseAdapter(emptyList())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        etFilter = findViewById(R.id.etFilter)
+        etFilter = binding.etFilter
 
         viewModel.cases.observe(this) { cases ->
-            adapter.updateData(cases)
+            if (cases.isEmpty()) {
+                recyclerView.visibility = View.GONE
+                binding.tvErrorMessage.visibility = View.VISIBLE
+                binding.tvErrorMessage.text = "No data available. Please check your internet connection."
+            } else {
+                recyclerView.visibility = View.VISIBLE
+                binding.tvErrorMessage.visibility = View.GONE
+                adapter.updateData(cases)
+            }
         }
 
         etFilter.addTextChangedListener(object : TextWatcher {
@@ -51,7 +63,15 @@ class MainActivity : AppCompatActivity() {
                     query.isEmpty() || case.diseaseClassification?.contains(query, ignoreCase = true) == true
                 } ?: emptyList()
 
-                adapter.updateData(filteredCases)
+                if (filteredCases.isEmpty()) {
+                    recyclerView.visibility = View.GONE
+                    binding.tvErrorMessage.visibility = View.VISIBLE
+                    binding.tvErrorMessage.text = "No matching records found."
+                } else {
+                    recyclerView.visibility = View.VISIBLE
+                    binding.tvErrorMessage.visibility = View.GONE
+                    adapter.updateData(filteredCases)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -59,8 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.fetchCases()
 
-        val btnCreateRecord = findViewById<Button>(R.id.btnCreateRecord)
-
+        val btnCreateRecord = binding.btnCreateRecord
         btnCreateRecord.setOnClickListener {
             val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_create_record, null)
             val dialog = AlertDialog.Builder(this)
@@ -93,6 +112,9 @@ class MainActivity : AppCompatActivity() {
                                 val currentCases = viewModel.cases.value.orEmpty().toMutableList()
                                 currentCases.add(newCase)
                                 adapter.notifyItemInserted(currentCases.size - 1)
+
+                                recyclerView.visibility = View.VISIBLE
+                                binding.tvErrorMessage.visibility = View.GONE
                             } catch (e: Exception) {
                                 e.printStackTrace()
                                 Toast.makeText(this@MainActivity, "Failed to create record: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()

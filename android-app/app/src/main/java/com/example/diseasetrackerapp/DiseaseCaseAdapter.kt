@@ -25,7 +25,7 @@ class DiseaseCaseAdapter(private var cases: List<DiseaseCase>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val case = cases[position]
-        holder.tvId.text = "ID: ${case.id}"
+        holder.tvId.text = "ID: ${case.id ?: "N/A"}"
         holder.tvDateRecorded.text = "Date Recorded: ${case.dateRecorded ?: "No Date Recorded"}"
         holder.tvClientGender.text = "Client Gender: ${case.clientGender ?: "No Gender"}"
         holder.tvClientAge.text = "Client Age: ${case.clientAge?.toString() ?: "Unknown Age"}"

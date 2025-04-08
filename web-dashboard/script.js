@@ -104,7 +104,8 @@ const renderCharts = (genderCounts, diseaseCounts) => {
                     '#8b5cf6',
                     '#06b6d4',
                     '#eab308',
-                    '#14b8a6'
+                    '#14b8a6',
+                    '#000000'
                 ],
                 hoverOffset: 4
             }]
