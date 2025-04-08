@@ -17,7 +17,7 @@ const fetchData = async () => {
         processData(data);
     } catch (error) {
         console.error('Error fetching data:', error);
-        document.getElementById('app').innerHTML = `<p class="text-red-500 text-center">Failed to load data. Please check the console for details.</p>`;
+        document.getElementById('app').innerHTML = `<p class="text-red-500 text-center">Failed to load data.</p>`;
     }
 };
 
